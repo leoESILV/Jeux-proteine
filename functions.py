@@ -1,3 +1,5 @@
+
+
 def move_and_bounce(x, y, speedX, speedY, img_width, img_height, screen_width, screen_height):
     """
     Met à jour la position de l'image et gère les rebonds.
@@ -22,3 +24,11 @@ def move_and_bounce(x, y, speedX, speedY, img_width, img_height, screen_width, s
         speedY = -speedY  # Inverser la direction verticale
 
     return x, y, speedX, speedY
+
+
+def protein_total(proteine, x):
+
+    proteine += x
+    return proteine 
+
+#def move_food_on_Y():
