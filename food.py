@@ -21,7 +21,7 @@ class Food: #classe MAMAN
         self.x = x
         self.y = y
         self.points = points  # Points associés à l'aliment
-
+        self.is_pushed = False # true si lancée
     def draw(self, screen):
         """
         Affiche l'aliment sur l'écran.
@@ -40,6 +40,26 @@ class Food: #classe MAMAN
         """
         return self.points
 
+    def place_on_y_with_mouse(self):
+            """
+            Met à jour la position sur l'axe Y en fonction de la position de la souris,
+            tout en maintenant l'axe X fixe à 20.
+            """
+            _, mouse_y = pygame.mouse.get_pos()  # Obtenir la position de la souris
+            self.x = 20  # Fixer l'axe X
+            self.y = mouse_y  # Positionner l'aliment en fonction de la souris
+
+            # faire push l'aliment sur x
+            
+    def food_push(self):
+        """
+        Fait avancer l'aliment le long de l'axe X.
+        """
+        if self.is_pushed:  # Si l'aliment est en mouvement
+            self.x += 10  # Augmente la position X pour le faire avancer
+            if self.x > 900:  # Si l'aliment sort de l'écran
+                self.is_pushed = False  # Arrêter le mouvement
+                self.x = 20  # Réinitialiser la position sur X
 
 
 # SOUS CLASSE DE FOOD 

@@ -1,5 +1,6 @@
 
 import pygame
+import random
 import ctypes
 from functions import move_and_bounce
 from food import *
@@ -41,20 +42,55 @@ speedY = 5
 background = pygame.image.load(r"C:\Users\Léo\OnedriveLeo\OneDrive\Esilv A4 CreaTek\CS_octobre\Jeux-proteine\asset\wallpaper_2monochrome.jpg")
 
 
+#  tirer un aliment aléatoire , on prend 1 des 3 food au hasard 
+def get_random_food():
+    food_classes = [ChickenLeg, WholeChicken, Fries]
+    selected_food_class = random.choice(food_classes)  # Tirer aléatoirement une classe
+    return selected_food_class(20, 100)  # Initialiser l'aliment avec X=20 et Y=100
+
+
+
+
+# Initialisation de la première food en main  et du timer
+random_food = get_random_food()
+last_time = pygame.time.get_ticks()  # Temps de la dernière mise à jour
+last_push_time = 0  # Temps de la dernière activation du push
+current_food = get_random_food()
+
 # Boucle principale
 running = True
 while running:
+    current_time = pygame.time.get_ticks()  # Temps actuel en millisecondes
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+    # Gestion du clic pour activer le push
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Clic gauche
+            if current_time - last_push_time >= 3000:  # Limite à 1 clic toutes les 3 secondes
+                current_food.is_pushed = True
+                last_push_time = current_time
+
+    # Changer de nourriture toutes les 3 secondes (3000 ms)
+    if current_time - last_time >= 3000:
+        random_food = get_random_food()  # Tirer un nouvel aliment
+        last_time = current_time  # Réinitialiser le timer
+
+    random_food.food_push()
+    
     # Déplacer le bodybuilder avec rebond
     bodybuilder.move_and_bounce(screen_width=900, screen_height=600)
+
+    # Mettre à jour la position verticale de l'aliment avec la souris
+    random_food.place_on_y_with_mouse()
 
     # Dessiner l'écran et le bodybuilder
     screen.fill((0, 0, 0))  # Effacer l'écran
     screen.blit(background, (0, 0))  # Afficher le fond
     bodybuilder.draw(screen)
+    random_food.draw(screen)  # Afficher l'aliment
+
 
 
     #  Affichaf*ger les points
