@@ -63,10 +63,13 @@ class Bodybuilder:
         self.x += self.speedX
         self.y += self.speedY
 
-        if self.x <= 0 or self.x + self.get_width() >= screen_width:
-            self.speedX = -self.speedX
+         # Rebond sur le bord gauche à partir de 50
+        if self.x <= 80 or self.x + self.get_width() >= screen_width:
+            self.speedX = -self.speedX  # Inverser la direction horizontale
+
+        # Rebond en haut et en bas
         if self.y <= 0 or self.y + self.get_height() >= screen_height:
-            self.speedY = -self.speedY
+            self.speedY = -self.speedY  # Inverser la direction verticale
 
     def protein_total(self, value):
         """
@@ -76,3 +79,7 @@ class Bodybuilder:
             value (int): Points à ajouter (positif ou négatif).
         """
         self.points += value
+
+    #collision
+    def get_rect(self):
+        return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())

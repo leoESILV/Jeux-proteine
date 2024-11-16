@@ -50,17 +50,36 @@ class Food: #classe MAMAN
             self.y = mouse_y  # Positionner l'aliment en fonction de la souris
 
             # faire push l'aliment sur x
-            
+
+
+
+
     def food_push(self):
+
+
+        #if self.is_pushed:  # Si l'aliment est en mouvement
+        self.x += 20  # Augmente rapidement la position X pour un déplacement fluide
+
         """
         Fait avancer l'aliment le long de l'axe X.
-        """
+        Returns:
+            bool: True si l'aliment traverse l'écran, sinon False.
+        
         if self.is_pushed:  # Si l'aliment est en mouvement
             self.x += 10  # Augmente la position X pour le faire avancer
             if self.x > 900:  # Si l'aliment sort de l'écran
                 self.is_pushed = False  # Arrêter le mouvement
-                self.x = 20  # Réinitialiser la position sur X
+                self.x = 200  # Réinitialiser la position pour un nouvel aliment
+                return True  # L'aliment a traversé l'écran
+        return False
+        """
 
+    #fonction pour collision 
+    def get_rect(self):
+            """
+            on choppe le rectangle de la nourriture
+            """
+            return pygame.Rect(self.x, self.y, self.image.get_width(), self.image.get_height())
 
 # SOUS CLASSE DE FOOD 
 class ChickenLeg(Food):
@@ -84,4 +103,4 @@ class Fries(Food):
     Classe pour des frites (-2 points).
     """
     def __init__(self, x, y):
-        super().__init__(r"C:\Users\Léo\OnedriveLeo\OneDrive\Esilv A4 CreaTek\CS_octobre\Jeux-proteine\asset\cuisse-de-poulet.png", x, y, size=(50, 50), points=-2)
+        super().__init__(r"C:\Users\Léo\OnedriveLeo\OneDrive\Esilv A4 CreaTek\CS_octobre\Jeux-proteine\asset\patates-frites.png", x, y, size=(50, 50), points=-2)
